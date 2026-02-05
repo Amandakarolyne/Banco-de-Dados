@@ -1,0 +1,69 @@
+DB 
+1️⃣ Criando o banco de dados
+CREATE DATABASE escola;
+
+-- Use o banco (MySQL)
+USE escola;
+
+2️⃣ Tabela de alunos
+CREATE TABLE alunos (
+    id_aluno INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    data_nascimento DATE,
+    email VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+3️⃣ Tabela de professores
+CREATE TABLE professores (
+    id_professor INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+4️⃣ Tabela de disciplinas
+CREATE TABLE disciplinas (
+    id_disciplina INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    carga_horaria INT
+);
+
+5️⃣ Tabela de turmas
+CREATE TABLE turmas (
+    id_turma INT PRIMARY KEY AUTO_INCREMENT,
+    ano INT NOT NULL,
+    semestre INT NOT NULL,
+    id_disciplina INT,
+    id_professor INT,
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_disciplina),
+    FOREIGN KEY (id_professor) REFERENCES professores(id_professor)
+);
+
+6️⃣ Tabela de matrículas (aluno ↔ turma)
+CREATE TABLE matriculas (
+    id_matricula INT PRIMARY KEY AUTO_INCREMENT,
+    id_aluno INT,
+    id_turma INT,
+    data_matricula DATE,
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
+    FOREIGN KEY (id_turma) REFERENCES turmas(id_turma)
+);
+
+7️⃣ Tabela de notas
+CREATE TABLE notas (
+    id_nota INT PRIMARY KEY AUTO_INCREMENT,
+    id_matricula INT,
+    nota DECIMAL(4,2),
+    FOREIGN KEY (id_matricula) REFERENCES matriculas(id_matricula)
+);
+
+🧠 O que esse modelo permite
+
+Um aluno pode se matricular em várias turmas
+
+Uma turma tem uma disciplina e um professor
+
+Cada matrícula pode ter notas
+
+Estrutura simples e bem normalizada
